@@ -2,9 +2,15 @@ import pool from '../config/database.js';
 
 // Helper function to calculate bill amount
 const calculateBill = (usage_kwh, tariff) => {
-  const electricity_charge = usage_kwh * tariff.rate_per_kwh;
-  const admin_fee = tariff.admin_fee || 0;
-  const tax_amount = (electricity_charge * (tariff.tax_percentage || 0)) / 100;
+  // Parse semua nilai sebagai number untuk menghindari string concatenation
+  const usageNum = parseFloat(usage_kwh) || 0;
+  const rateNum = parseFloat(tariff.rate_per_kwh) || 0;
+  const adminFeeNum = parseFloat(tariff.admin_fee) || 0;
+  const taxPctNum = parseFloat(tariff.tax_percentage) || 0;
+
+  const electricity_charge = usageNum * rateNum;
+  const admin_fee = adminFeeNum;
+  const tax_amount = (electricity_charge * taxPctNum) / 100;
   const total_amount = electricity_charge + admin_fee + tax_amount;
 
   return {
