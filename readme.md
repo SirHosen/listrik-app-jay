@@ -503,32 +503,40 @@ Setelah setup database, gunakan kredensial berikut untuk login:
 ```
 Pemakaian (kWh) = Meter Sekarang - Meter Sebelumnya
 Biaya Listrik   = Pemakaian × Tarif per kWh
-Pajak           = Biaya Listrik × (Persentase Pajak / 100)
-Total Tagihan   = Biaya Listrik + Biaya Admin + Pajak
+Total Tagihan   = Biaya Listrik + Biaya Admin
 ```
 
 ### Contoh:
 - Meter sebelumnya: 1000 kWh
-- Meter sekarang: 1150 kWh
-- Daya: 900 VA (Tarif: Rp 1.444/kWh, Admin: Rp 5.000, Pajak: 3%)
+- Meter sekarang: 1100 kWh
+- Daya: 450 VA (Tarif: Rp 415/kWh, Admin: Rp 2.500)
 
 ```
-Pemakaian     = 1150 - 1000 = 150 kWh
-Biaya Listrik = 150 × 1.444 = Rp 216.600
-Pajak         = 216.600 × 0.03 = Rp 6.498
-Total         = 216.600 + 5.000 + 6.498 = Rp 228.098
+Pemakaian     = 1100 - 1000 = 100 kWh
+Biaya Listrik = 100 × 415 = Rp 41.500
+Admin Fee     = Rp 2.500
+Total         = 41.500 + 2.500 = Rp 44.000
+```
+
+### Contoh 2 (900 VA):
+- Pemakaian: 150 kWh
+- Tarif: Rp 1.352/kWh, Admin: Rp 3.000
+
+```
+Biaya Listrik = 150 × 1.352 = Rp 202.800
+Total         = 202.800 + 3.000 = Rp 205.800
 ```
 
 ---
 
-## Tarif Default
+## Tarif Default (PLN 2024)
 
-| Daya (VA) | Tarif/kWh | Admin Fee | Pajak |
-|-----------|-----------|-----------|-------|
-| 450 | Rp 1.352 | Rp 2.500 | 3% |
-| 900 | Rp 1.444 | Rp 5.000 | 3% |
-| 1300 | Rp 1.699 | Rp 7.500 | 5% |
-| 2200 | Rp 1.699 | Rp 10.000 | 5% |
+| Daya (VA) | Kategori | Tarif/kWh | Admin Fee |
+|-----------|----------|-----------|-----------|
+| 450 | Subsidi | Rp 415 | Rp 2.500 |
+| 900 | Non-subsidi | Rp 1.352 | Rp 3.000 |
+| 1300 | Non-subsidi | Rp 1.444 | Rp 3.000 |
+| 2200 | Non-subsidi | Rp 1.444 | Rp 3.000 |
 
 ---
 
