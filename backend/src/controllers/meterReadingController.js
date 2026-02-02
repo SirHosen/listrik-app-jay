@@ -261,10 +261,10 @@ export const getLastMeterReading = async (req, res) => {
     const { customerId } = req.params;
 
     const [readings] = await pool.query(
-      `SELECT mr.*, c.customer_number, c.full_name, c.power_capacity, t.price_per_kwh
+      `SELECT mr.*, c.customer_number, c.full_name, c.power_capacity, t.rate_per_kwh
        FROM meter_readings mr
        JOIN customers c ON mr.customer_id = c.id
-       LEFT JOIN tariffs t ON c.power_capacity = t.power_capacity
+       LEFT JOIN tariffs t ON c.power_capacity = t.power_capacity AND t.is_active = TRUE
        WHERE mr.customer_id = ?
        ORDER BY mr.reading_month DESC
        LIMIT 1`,
@@ -274,9 +274,9 @@ export const getLastMeterReading = async (req, res) => {
     if (readings.length === 0) {
       // No previous reading, get customer info only
       const [customers] = await pool.query(
-        `SELECT c.*, t.price_per_kwh
+        `SELECT c.*, t.rate_per_kwh
          FROM customers c
-         LEFT JOIN tariffs t ON c.power_capacity = t.power_capacity
+         LEFT JOIN tariffs t ON c.power_capacity = t.power_capacity AND t.is_active = TRUE
          WHERE c.id = ?`,
         [customerId]
       );
@@ -294,7 +294,7 @@ export const getLastMeterReading = async (req, res) => {
           customer: customers[0],
           lastReading: null,
           lastMeter: 0,
-          pricePerKwh: customers[0].price_per_kwh || 0
+          pricePerKwh: customers[0].rate_per_kwh || 0
         }
       });
     }
@@ -311,7 +311,7 @@ export const getLastMeterReading = async (req, res) => {
         lastReading: readings[0],
         lastMeter: readings[0].current_meter,
         lastMonth: readings[0].reading_month,
-        pricePerKwh: readings[0].price_per_kwh || 0
+        pricePerKwh: readings[0].rate_per_kwh || 0
       }
     });
 

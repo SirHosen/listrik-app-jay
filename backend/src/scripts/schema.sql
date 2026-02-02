@@ -116,10 +116,11 @@ CREATE TABLE IF NOT EXISTS payments (
   INDEX idx_status (status)
 );
 
--- Insert default tariffs
+-- Insert default tariffs (Tarif PLN 2024)
+-- 450 VA = Subsidi, 900-2200 VA = Non-subsidi
 INSERT INTO tariffs (power_capacity, rate_per_kwh, admin_fee, tax_percentage, effective_date) VALUES
-('450', 1352, 2500, 3, '2024-01-01'),
-('900', 1444, 5000, 3, '2024-01-01'),
-('1300', 1699, 7500, 5, '2024-01-01'),
-('2200', 1699, 10000, 5, '2024-01-01')
+('450', 415, 2500, 0, '2024-01-01'),
+('900', 1352, 3000, 0, '2024-01-01'),
+('1300', 1444, 3000, 0, '2024-01-01'),
+('2200', 1444, 3000, 0, '2024-01-01')
 ON DUPLICATE KEY UPDATE rate_per_kwh = rate_per_kwh;
